@@ -5,6 +5,7 @@ export const todos = pgTable('todos', {
   id: serial('id').primaryKey(),
   title: varchar('title', { length: 256 }).notNull(),
   createdAt: timestamp('createdAt').defaultNow().notNull(),
+  completedAt: timestamp('completedAt')
 })
 
 export type Todo = InferModel<typeof todos>
