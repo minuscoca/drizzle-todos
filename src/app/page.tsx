@@ -1,20 +1,32 @@
-'use client'
+import TodoCreator from "./components/TodoCreator"
+import type { Todo } from '../db/schema/todos'
+import { todos } from '../db/schema/todos'
+import db from '../db/db'
 
-import { ChangeEvent, useRef } from "react"
+async function getTodos(): Promise<Todo[]> {
+  const selectResult = await db.select().from(todos)
+  return selectResult
+}
 
-export default function Home() {
-  const inputRef = useRef('')
-  function handleChange(e: ChangeEvent<HTMLInputElement>) {
-    inputRef.current = e.currentTarget.value
-    console.log('todo.title:', inputRef.current)
-  }
+async function TodoList() {
+  const data = await getTodos()
+  return (
+    <div>
+      <h1>Todo List</h1>
+      {data.map((todo) => <div key={todo.id}>{todo.title}</div>)}
+    </div>
+  )
+}
+
+export default async function Home() {
+
+
   return (
     <main className="flex min-h-screen flex-col items-center p-24">
       <h1 className="text-6xl m-4">Drizzle Todos</h1>
-      <div className="m-4 flex gap-4">
-        <input className="text-black pl-2 pr-2 rounded-md" onChange={handleChange} />
-        <button className="pl-8 pr-8 pt-2 pb-2 rounded-md bg-gray-500 hover:bg-gray-600 active:bg-gray-700" onClick={e => console.log('add todo:', { title: inputRef.current })}>Add</button>
-      </div>
+      <TodoCreator />
+      {/* @ts-expect-error */}
+      <TodoList />
     </main>
   )
 }
