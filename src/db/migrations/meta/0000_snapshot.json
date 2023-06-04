@@ -1,7 +1,7 @@
 {
   "version": "5",
   "dialect": "pg",
-  "id": "79617f66-ecba-4b12-8adf-c46d03d78b41",
+  "id": "1d56d71d-b5b6-4485-900d-1d478d964fda",
   "prevId": "00000000-0000-0000-0000-000000000000",
   "tables": {
     "todos": {
@@ -26,6 +26,18 @@
           "primaryKey": false,
           "notNull": true,
           "default": "now()"
+        },
+        "completedAt": {
+          "name": "completedAt",
+          "type": "timestamp",
+          "primaryKey": false,
+          "notNull": false
+        },
+        "status": {
+          "name": "status",
+          "type": "status",
+          "primaryKey": false,
+          "notNull": false
         }
       },
       "indexes": {},
@@ -33,7 +45,15 @@
       "compositePrimaryKeys": {}
     }
   },
-  "enums": {},
+  "enums": {
+    "status": {
+      "name": "status",
+      "values": {
+        "TODO": "TODO",
+        "COMPLETED": "COMPLETED"
+      }
+    }
+  },
   "schemas": {},
   "_meta": {
     "schemas": {},
